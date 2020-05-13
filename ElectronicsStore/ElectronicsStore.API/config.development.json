@@ -1,0 +1,5 @@
+﻿{
+  "CurrenciesApiUrl": "https://www.cbr-xml-daily.ru/daily_json.js",
+  "DBConnectionString": "Data Source = RITTER; Initial Catalog=ShopDB;Integrated Security = True",
+  "isProduction": "false"
+}

@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="5.1.3" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="Dapper" Version="2.0.35" />
+    <PackageReference Include="nunit" Version="3.12.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ElecronicsStore.DB\ElecronicsStore.DB.csproj" />
+    <ProjectReference Include="..\ElectronicsStore.API\ElectronicsStore.API.csproj" />
+    <ProjectReference Include="..\ElectronicsStore.Core\ElectronicsStore.Core.csproj" />
+    <ProjectReference Include="..\ElectronicsStore.Repository\ElectronicsStore.Repository.csproj" />
+  </ItemGroup>
+
+</Project>
