@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace ElectronicsStore.API
 {
@@ -21,7 +22,9 @@ namespace ElectronicsStore.API
                 builder.AddJsonFile("config.development.json", false, true);
             Configuration = builder.Build();
         }
+        
         public IConfiguration Configuration { get; }
+        
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -37,18 +40,32 @@ namespace ElectronicsStore.API
 
             app.UseAuthorization();
 
+            app.UseSwagger();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "ElectroinicsStore V1");
+            });
         }
+        
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterModule(new AutofacModule());
         }
+        
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ElectroinicsStore", Version = "v1" });
+            });
 
             services.Configure<StorageOptions>(Configuration);
 
