@@ -2,6 +2,7 @@
 using ElecronicsStore.DB.Models;
 using ElectronicsStore.Core.ConfigurationOptions;
 using Microsoft.Extensions.Options;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -59,6 +60,39 @@ namespace ElecronicsStore.DB.Storages
                         transaction: _transaction,
                         commandType: CommandType.StoredProcedure);
                 return result.FirstOrDefault();
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async ValueTask<List<Product>> ProductSearch(ProductSearch dataModel)
+        {
+            try
+            {
+                DynamicParameters param = new DynamicParameters(new
+                {
+                    dataModel.Id,
+                    dataModel.IdOperation,
+                    dataModel.Name,
+                    dataModel.NameOperation,
+                    dataModel.Price,
+                    dataModel.PriceOperation,
+                    dataModel.TradeMark,
+                    dataModel.TradeMarkOperation,
+                    dataModel.CategoryId,
+                    dataModel.CategoryIdOperation,
+                    dataModel.ParentCategoryId,
+                    dataModel.ParentCategoryIdOperation,
+                    dataModel.PriceEnd
+                });
+                var result = await _connection.QueryAsync<Product>(
+                    SpName.ProductSearch,
+                        param,
+                        transaction: _transaction,
+                        commandType: CommandType.StoredProcedure);
+                return result.ToList();
             }
             catch (SqlException ex)
             {
