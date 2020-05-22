@@ -14,6 +14,10 @@
         public string CategoryIdOperation { get; set; }
         public int? ParentCategoryId { get; set; }
         public string ParentCategoryIdOperation { get; set; }
+        public string CategoryName { get; set; }
+        public string CategoryNameOperation { get; set; }
+        public string ParentCategoryName { get; set; }
+        public string ParentCategoryNameOperation { get; set; }
         public decimal? PriceEnd { get; set; }
     }
 }

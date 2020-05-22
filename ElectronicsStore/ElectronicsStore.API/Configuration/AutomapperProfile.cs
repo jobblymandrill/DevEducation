@@ -12,16 +12,17 @@ namespace ElectronicsStore.API.Configuration
         public AutomapperProfile()
         {
             CreateMap<ProductInputModel, Product>();
-            CreateMap<Product, ProductOutputModel>()
-                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => new Category
-                {
-                    Name = src.Category.Name,
-                    ParentCategory =
-                new Category { Name = src.Category.ParentCategory.Name }
-                }))
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price))
-                .ForMember(dest => dest.TradeMark, opt => opt.MapFrom(src => src.TradeMark));
+            CreateMap<ProductSearchInputModel, ProductSearch>();
+            CreateMap<Product, ProductOutputModel>();
+                //.ForMember(dest => dest.Category, opt => opt.MapFrom(src => new Category
+                //{
+                //    Name = src.Category.Name,
+                //    ParentCategory =
+                //new Category { Name = src.Category.ParentCategory.Name }
+                //}))
+                //.ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                //.ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price))
+                //.ForMember(dest => dest.TradeMark, opt => opt.MapFrom(src => src.TradeMark));
             CreateMap<Category, CategoryOutputModel>()
             .ForMember(dest => dest.ParentCategoryName, opt => opt.MapFrom(src => src.ParentCategory.Name));
             CreateMap<CategoryWithNumber, CategoryWithNumberOutputModel>();

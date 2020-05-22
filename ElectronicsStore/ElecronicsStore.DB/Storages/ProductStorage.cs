@@ -85,13 +85,27 @@ namespace ElecronicsStore.DB.Storages
                     dataModel.CategoryIdOperation,
                     dataModel.ParentCategoryId,
                     dataModel.ParentCategoryIdOperation,
+                    dataModel.CategoryName,
+                    dataModel.CategoryNameOperation,
+                    dataModel.ParentCategoryName,
+                    dataModel.ParentCategoryNameOperation,
                     dataModel.PriceEnd
                 });
-                var result = await _connection.QueryAsync<Product>(
-                    SpName.ProductSearch,
-                        param,
-                        transaction: _transaction,
-                        commandType: CommandType.StoredProcedure);
+                var result = await _connection.QueryAsync<Product, Category, Category, Product>(
+                            SpName.ProductSearch,
+                            (product, category, parentCategory) =>
+                            {
+                                Product newProduct = product;
+                                Category newCategory = category;
+                                Category newParentCategory = parentCategory;
+                                newCategory.ParentCategory = newParentCategory;
+                                newProduct.Category = newCategory;
+                                return newProduct;
+                            },
+                            param,
+                            transaction: _transaction,
+                            commandType: CommandType.StoredProcedure,
+                            splitOn: "Id, Id, Id");
                 return result.ToList();
             }
             catch (SqlException ex)
