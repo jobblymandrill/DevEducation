@@ -2,10 +2,15 @@
 <html>
 <head>
     <meta charset="utf-8" />
+    <meta name="google-signin-client_id" content="1094355278527-a3mf88r2b59g0aq54p9ncddde37hukdo.apps.googleusercontent.com">
     <title>ElectronicsStore</title>
 </head>
 <body>
     <img class="picture" src="img/toIndexPage.jpg" alt="very cute pic">
+    <div style="height:40px">
+        <div style="position: absolute; right:10px" class="g-signin2" data-onsuccess="onSignIn"></div>
+        <a style="position: absolute; right:40px; top:50px" href="#" onclick="signOut();">Sign out</a>
+    </div>
 
     <style type="text/css">
         .picture {
@@ -18,5 +23,21 @@
         }
     </style>
 
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script>
+        function onSignIn(googleUser) {
+            var profile = googleUser.getBasicProfile();
+            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+            console.log('Name: ' + profile.getName());
+            console.log('Image URL: ' + profile.getImageUrl());
+            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+        }
+        function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+                console.log('User signed out.');
+            });
+        }
+    </script>
 </body>
 </html>
