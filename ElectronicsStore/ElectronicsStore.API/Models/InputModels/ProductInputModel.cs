@@ -1,6 +1,4 @@
-﻿using ElecronicsStore.DB.Models;
-
-namespace ElectronicsStore.API.Models.InputModels
+﻿namespace ElectronicsStore.API.Models.InputModels
 {
     public class ProductInputModel
     {

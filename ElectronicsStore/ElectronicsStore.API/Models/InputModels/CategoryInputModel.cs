@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ElectronicsStore.API.Models.InputModels
+﻿namespace ElectronicsStore.API.Models.InputModels
 {
     public class CategoryInputModel
     {

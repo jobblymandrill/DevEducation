@@ -4,6 +4,7 @@ using ElectronicsStore.API.Models.InputModels;
 using ElectronicsStore.API.Models.OutputModels;
 using ElectronicsStore.Core;
 using ElectronicsStore.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace ElectronicsStore.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ReportController : ControllerBase, IReportController
+    public class ReportController : ControllerBase
     {
         private readonly IMapper _mapper;
         private readonly IReportRepository _reportRepository;
@@ -22,6 +23,7 @@ namespace ElectronicsStore.API.Controllers
             _mapper = mapper;
         }
 
+        [Authorize]
         [HttpGet("category/with-more-than-{number}-products")]
         public async ValueTask<ActionResult<List<CategoryWithNumberOutputModel>>> GetCategoriesWithACertainProductNumber(int number)
         {
@@ -38,6 +40,7 @@ namespace ElectronicsStore.API.Controllers
             return Problem($"Transaction failed {result.ExMessage}", statusCode: 520);
         }
 
+        [Authorize]
         [HttpGet("product/from-warehouse-not-present-in-msc-and-spb")]
         public async ValueTask<ActionResult<List<ProductOutputModel>>> GetProductsFromWareHouseNotPresentInMscAndSpb()
         {
@@ -53,6 +56,7 @@ namespace ElectronicsStore.API.Controllers
             return Problem($"Transaction failed {result.ExMessage}", statusCode: 520);
         }
 
+        //[Authorize]
         [HttpGet("product/finished")]
         public async ValueTask<ActionResult<List<ProductOutputModel>>> GetRanOutProducts()
         {
@@ -68,6 +72,7 @@ namespace ElectronicsStore.API.Controllers
             return Problem($"Transaction failed {result.ExMessage}", statusCode: 520);
         }
 
+        [Authorize]
         [HttpGet("product/most-popular-in-each-city")]
         public async ValueTask<ActionResult<List<ProductWithCityOutputModel>>> GetMostPopularProductInEachCity()
         {
@@ -83,6 +88,7 @@ namespace ElectronicsStore.API.Controllers
             return Problem($"Transaction failed {result.ExMessage}", statusCode: 520);
         }
 
+        [Authorize]
         [HttpGet("product/never-ordered")]
         public async ValueTask<ActionResult<List<ProductOutputModel>>> GetNeverOrderedProducts()
         {
@@ -95,6 +101,7 @@ namespace ElectronicsStore.API.Controllers
             return Problem($"Transaction failed {result.ExMessage}", statusCode: 520);
         }
 
+        [Authorize]
         [HttpGet("income/from-russia-and-foreign-countries")]
         public async ValueTask<ActionResult<IncomeByIsForeignCriteriaOutputModel>> GetIncomeFromRussiaAndFromForeignCountries()
         {
@@ -107,6 +114,7 @@ namespace ElectronicsStore.API.Controllers
             return Problem($"Transaction failed {result.ExMessage}", statusCode: 520);
         }
 
+        [Authorize]
         [HttpGet("income/from-each-filial")]
         public async ValueTask<ActionResult<List<FilialWithIncomeOutputModel>>> GetIncomeFromEachFilial()
         {
@@ -119,6 +127,7 @@ namespace ElectronicsStore.API.Controllers
             return Problem($"Transaction failed {result.ExMessage}", statusCode: 520);
         }
 
+        [Authorize]
         [HttpGet("income/of-filials-during-period")]
         public async ValueTask<ActionResult<List<FilialWithIncomeOutputModel>>> GetTotalFilialSumPerPeriod(PeriodInputModel inputModel)
         {
